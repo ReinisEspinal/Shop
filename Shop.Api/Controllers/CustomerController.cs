@@ -3,6 +3,7 @@ using System.Linq;
 using Shop.Api.Models;
 using Shop.Api.Models.Response;
 using Shop.Api.Models.Request;
+using Shop.Api.Models.ViewModel;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -28,7 +29,8 @@ namespace Shop.Api.Controllers
 
             try
             {
-                var customers = _context.Customers.ToList();
+                var customers = _context.Customers.Select(cust => new CustumerViewModel(cust))
+                                                  .ToList();
 
                 customerResponse = new CustomerResponse()
                 {
