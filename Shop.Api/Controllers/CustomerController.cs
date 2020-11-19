@@ -71,7 +71,8 @@ namespace Shop.Api.Controllers
                     Contactname = customerRequest.Contactname,
                     Contacttitle = customerRequest.Contacttitle,
                     Country = customerRequest.Country,
-                    Fax = customerRequest.Fax,
+                    Fax = customerRequest.Fax, 
+                    Email= customerRequest.Email,
                     Phone = customerRequest.Phone,
                     Postalcode = customerRequest.Postalcode,
                     Region = customerRequest.Region
@@ -81,7 +82,7 @@ namespace Shop.Api.Controllers
 
                 _context.SaveChanges();
 
-                customerRequest.CustomerId = newCust.Custid;
+                customerRequest.CustumerId = newCust.Custid;
 
                 customerResponse = new CustomerResponse()
                 {
@@ -129,14 +130,15 @@ namespace Shop.Api.Controllers
                     Phone = customerRequest.Phone,
                     Postalcode = customerRequest.Postalcode,
                     Region = customerRequest.Region, 
-                    Custid= customerRequest.CustomerId
+                    Custid= customerRequest.CustumerId, 
+                    Email = customerRequest.Email
                 };
 
                 _context.Customers.Update(newCust);
 
                 _context.SaveChanges();
 
-                customerRequest.CustomerId = newCust.Custid;
+                customerRequest.CustumerId = newCust.Custid;
 
                 customerResponse = new CustomerResponse()
                 {
@@ -171,7 +173,7 @@ namespace Shop.Api.Controllers
             CustomerResponse customerResponse;
             try
             {
-                var removeCust = new Customers() { Custid= removeCustumerRequest.CustomerId };
+                var removeCust = new Customers() { Custid= removeCustumerRequest.CustumerId };
 
                 _context.Customers.Remove(removeCust);
                 

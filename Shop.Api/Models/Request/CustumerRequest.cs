@@ -4,11 +4,12 @@ namespace Shop.Api.Models.Request
 {
     public class CustumerRequest
     {
-        public int CustomerId { get; set; }
+        public int CustumerId { get; set; }
         public string Companyname { get; set; }
         public string Contactname { get; set; }
         public string Contacttitle { get; set; }
         public string Address { get; set; }
+        public string Email { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
         public string Postalcode { get; set; }
