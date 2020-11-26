@@ -25,6 +25,8 @@ namespace Shop.Api.Models
         public virtual DbSet<Shippers> Shippers { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
 
+        public virtual DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Categories>(entity =>
@@ -396,6 +398,30 @@ namespace Shop.Api.Models
                     .HasMaxLength(15);
             });
 
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.ToTable("Users", "Security");
+
+                entity.Property(e => e.UserId).HasColumnName("UserId");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("Email")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                   .IsRequired()
+                   .HasColumnName("Password")
+                   .HasMaxLength(200);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("Name")
+                    .HasMaxLength(200);
+            });
+            
             OnModelCreatingPartial(modelBuilder);
         }
 

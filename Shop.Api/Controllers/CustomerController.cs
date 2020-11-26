@@ -6,11 +6,13 @@ using Shop.Api.Models.Request;
 using Shop.Api.Models.ViewModel;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shop.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomerController : ControllerBase
     {
         private readonly ShopContext _context;
@@ -167,13 +169,14 @@ namespace Shop.Api.Controllers
 
         }
 
-        [HttpDelete]
-        public IActionResult Remove(RemoveCustumerRequest removeCustumerRequest) 
+        [HttpDelete("{custId}")]
+        public IActionResult Remove(int custId) 
         {
             CustomerResponse customerResponse;
             try
             {
-                var removeCust = new Customers() { Custid= removeCustumerRequest.CustumerId };
+                var removeCust = this._context.Customers.Find(custId);
+                               
 
                 _context.Customers.Remove(removeCust);
                 
