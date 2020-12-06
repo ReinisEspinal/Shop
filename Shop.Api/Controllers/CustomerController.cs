@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Shop.Api.Models;
 using Shop.Api.Models.Response;
