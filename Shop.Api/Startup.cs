@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Api.Models;
 using Shop.Api.Models.Common;
+using Shop.Api.Services.Sales;
+using Shop.Api.Services.Sales.Contract;
 using Shop.Api.Services.Security;
 using Shop.Api.Services.Security.Contract;
 
@@ -76,6 +75,7 @@ namespace Shop.Api
 
             services.AddDbContext<ShopContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("ShopDatabase")));
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ISaleService, SaleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,8 +94,7 @@ namespace Shop.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-          
+                     
 
             app.UseEndpoints(endpoints =>
             {
