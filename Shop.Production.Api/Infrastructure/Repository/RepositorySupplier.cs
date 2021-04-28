@@ -1,6 +1,6 @@
 ﻿using Shop.Shared.Core;
-using Shop.Production.Api.Infrastructure.Entities;
-using Shop.Production.Api.Infrastructure.Contracts;
+using Shop.Production.Api.Infrastructure.Data.Entities;
+using Shop.Production.Api.Infrastructure.Repository.Contracts;
 using System;
 using System.Threading.Tasks;
 using Shop.Production.Api.Infrastructure.Context;

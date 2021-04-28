@@ -1,7 +1,7 @@
 ﻿using Shop.Shared.Core;
 using System.Collections.Generic;
 
-namespace Shop.Production.Api.Infrastructure.Entities
+namespace Shop.Production.Api.Infrastructure.Data.Entities
 {
     public class Supplier : BaseEntity
     {

@@ -1,6 +1,6 @@
 ﻿using Shop.Production.Api.Infrastructure.Context;
-using Shop.Production.Api.Infrastructure.Contracts;
-using Shop.Production.Api.Infrastructure.Entities;
+using Shop.Production.Api.Infrastructure.Repository.Contracts;
+using Shop.Production.Api.Infrastructure.Data.Entities;
 using Shop.Shared.Core;
 namespace Shop.Production.Api.Infrastructure.Repository
 {

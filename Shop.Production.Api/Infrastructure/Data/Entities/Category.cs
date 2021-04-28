@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Shop.Shared.Core;
 
 
-namespace Shop.Production.Api.Infrastructure.Entities
+namespace Shop.Production.Api.Infrastructure.Data.Entities
 {
     public class Category : BaseEntity
     {
