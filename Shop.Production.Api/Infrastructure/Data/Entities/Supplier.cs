@@ -1,8 +1,10 @@
 ﻿using Shop.Shared.Core;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Production.Api.Infrastructure.Data.Entities
 {
+    [Table("Suppliers", Schema = "Production")]
     public class Supplier : BaseEntity
     {
         public Supplier()

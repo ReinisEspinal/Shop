@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Shop.Production.Api.Infrastructure.Context;
+using Shop.Production.Api.Infrastructure.Repository;
+using Shop.Production.Api.Infrastructure.Repository.Contracts;
+using Shop.Production.Api.Infrastructure.Services;
+using Shop.Production.Api.Infrastructure.Services.Contracts;
+
 
 namespace Shop.Production.Api
 {
@@ -24,7 +24,14 @@ namespace Shop.Production.Api
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {    
+            services.AddDbContext<ProductionContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("ProductionContext")));
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductService, ProductService>();
+
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddTransient<ISupplierService, SupplierService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

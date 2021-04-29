@@ -8,7 +8,7 @@ namespace Shop.Production.Api.Infrastructure.Repository.Contracts
     public interface ISupplierRepository : IBaseRepository<Supplier>
     {
         Task AddSupplier(Supplier oSupplier);
-       void UpdateSupplier(Supplier oSupplier);
+        void UpdateSupplier(Supplier oSupplier);
         void RemoveSupplier(Supplier oSupplier);
         Task<Supplier> GetSupplierByID(int supplierID);
         IEnumerable<Supplier> GetSuppliers();

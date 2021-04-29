@@ -1,97 +1,28 @@
-﻿using Shop.Shared.Core;
-using Shop.Production.Api.Infrastructure.Data.Entities;
-using Shop.Production.Api.Infrastructure.Repository.Contracts;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Shop.Production.Api.Infrastructure.Context;
-using System.Collections.Generic;
+using Shop.Production.Api.Infrastructure.Repository.Contracts;
+using Shop.Production.Api.Infrastructure.Data.Entities;
+using Shop.Shared.Core;
 
 namespace Shop.Production.Api.Infrastructure.Repository
 {
-    public class RepositorySupplier : BaseRepository<Supplier>, ISupplierRepository
+    public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
         private readonly ProductionContext _db;
-
-        public RepositorySupplier(ProductionContext db) : base(db)
+        public ProductRepository(ProductionContext db) : base(db)
         {
             this._db = db;
         }
-        public async Task AddSupplier(Supplier supplier)
-        {
-            try
-            {
-                await base.Add(supplier);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
 
-        public void UpdateSupplier(Supplier supplier)
+        public async Task AddProduct(Product product)
         {
             try
             {
-                base.Update(supplier);
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message);
-            }
-        }
-        public void RemoveSupplier(Supplier supplier)
-        {
-            try
-            {
-                base.Remove(supplier);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-        public async Task<Supplier> GetSupplierByID(int supplierID)
-        {
-            try
-            {
-                return await base.GetById(supplierID);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-        public IEnumerable<Supplier> GetSuppliers()
-        {
-            try
-            {
-                return base.FindAll(oSupplier => !oSupplier.Deleted);
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-
-        }
-
-        public async Task<bool> SaveSupplier()
-        {
-            try
-            {
-                return await base.Commit();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public async Task<bool> SupplierExists()
-        {
-            try
-            {
-                return await base.Exists(oSupplier => !oSupplier.Deleted);
+                await base.Add(product);
             }
             catch (Exception e)
             {
@@ -100,6 +31,81 @@ namespace Shop.Production.Api.Infrastructure.Repository
             }
         }
 
+        public async Task<Product> GetProductByID(int productId)
+        {
+            try
+            {
+                return await base.GetById(productId);
+            }
+            catch (Exception e)
+            {
 
+                throw new Exception(e.Message);
+            }
+        }
+
+        public IEnumerable<Product> GetProducts()
+        {
+            try
+            {
+                return base.FindAll(oProduct => !oProduct.Deleted);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<bool> ProductExists()
+        {
+            try
+            {
+                return await base.Exists(oProducto => !oProducto.Deleted);
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception (e.Message);
+            }
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            try
+            {
+                base.Remove(product);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public Task<bool> SaveProduct()
+        {
+            try
+            {
+                return base.Commit();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            try
+            {
+                base.Update(product);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
