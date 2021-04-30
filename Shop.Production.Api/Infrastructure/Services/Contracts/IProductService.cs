@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models;
+using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Product;
 using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
 
 namespace Shop.Production.Api.Infrastructure.Services.Contracts
@@ -9,9 +11,9 @@ namespace Shop.Production.Api.Infrastructure.Services.Contracts
     public interface IProductService
     {
         ProductServiceResultCore GetProducts();
-        Task<ProductServiceResultCore> GetProductByID();
-        Task<ProductServiceResultCore> SaveProduct();
-        Task<ProductServiceResultCore> UpdateProduct();
-        Task<ProductServiceResultCore> DeleteProduct();
+      ProductServiceResultCore GetProductByID(int id);
+        Task<ProductServiceResultCore> SaveProduct(ProductServiceResultModel oProductServiceResultModel);
+        Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModel oProductServiceResultModel);
+        Task<ProductServiceResultCore> RemoveProduct(ProductServiceResultDeletedModel oProductServiceResultModel);
     }
 }

@@ -5,17 +5,12 @@ using System.Threading.Tasks;
 using Shop.Shared.Contracts;
 using Shop.Production.Api.Infrastructure.Data.Entities;
 using System.Linq.Expressions;
+using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
 
 namespace Shop.Production.Api.Infrastructure.Repository.Contracts
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
-        Task AddProduct(Product product);
-        void UpdateProduct(Product product);
-        void RemoveProduct(Product product);
-        IEnumerable<Product> GetProducts();
-        Task<Product> GetProductByID(int productId);
-        Task<bool> SaveProduct();
-        Task<bool> ProductExists ();
+  
     }
 }

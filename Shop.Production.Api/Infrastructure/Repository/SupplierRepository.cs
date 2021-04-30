@@ -27,7 +27,6 @@ namespace Shop.Production.Api.Infrastructure.Repository
                 throw new Exception(e.Message);
             }
         }
-
         public void UpdateSupplier(Supplier supplier)
         {
             try
@@ -75,7 +74,6 @@ namespace Shop.Production.Api.Infrastructure.Repository
             }
 
         }
-
         public async Task<bool> SaveSupplier()
         {
             try
