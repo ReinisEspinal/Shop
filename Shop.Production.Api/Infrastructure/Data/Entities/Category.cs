@@ -12,8 +12,8 @@ namespace Shop.Production.Api.Infrastructure.Data.Entities
             Products = new HashSet<Product>();
         }
 
-        public int Categoryid { get; set; }
-        public string Categoryname { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string Description { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }

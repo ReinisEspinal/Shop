@@ -12,18 +12,19 @@ namespace Shop.Production.Api.Infrastructure.Context
         //}
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-           // options.UseSqlServer(_cnnString);
+            //     options.UseSqlServer(_cnnString);
         }
 
         public ProductionContext(DbContextOptions<ProductionContext> options)
           : base(options)
         {
-           
+
 
         }
 
-       //public virtual DbSet<Category> Categories { get; set; }
+        //public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
     }
 }

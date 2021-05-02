@@ -19,7 +19,7 @@ namespace Shop.Shared.Core
             this._entity = context.Set<TEntity>();
         }
 
-        public virtual async Task Add(TEntity entity)
+        public virtual async Task  Add(TEntity entity)
         {
             await _entity.AddAsync(entity);
         }
