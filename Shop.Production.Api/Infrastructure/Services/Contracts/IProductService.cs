@@ -11,9 +11,9 @@ namespace Shop.Production.Api.Infrastructure.Services.Contracts
     public interface IProductService
     {
         ProductServiceResultCore GetProducts();
-      ProductServiceResultCore GetProductByID(int id);
-        Task<ProductServiceResultCore> SaveProduct(ProductServiceResultModel oProductServiceResultModel);
-        Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModel oProductServiceResultModel);
-        Task<ProductServiceResultCore> RemoveProduct(ProductServiceResultDeletedModel oProductServiceResultModel);
+        Task<ProductServiceResultCore> SaveProduct(ProductServiceResultAddModel oProductServiceResultModel);
+        Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModifyModel oProductServiceResultModel);
+        Task<ProductServiceResultCore> RemoveProduct(int id);
+        Task<ProductServiceResultCore> GetProductById(int id);
     }
 }

@@ -14,9 +14,8 @@ namespace Shop.Production.Api.Infrastructure.Repository
     {
         public ProductRepository(ProductionContext db) : base(db)
         {
-           
+      
         }
 
-   
     }
 }

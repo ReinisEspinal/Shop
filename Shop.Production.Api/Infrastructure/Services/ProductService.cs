@@ -16,10 +16,8 @@ namespace Shop.Production.Api.Infrastructure.Services
     {
         public readonly IProductRepository _ProductRepository;
         public readonly ISupplierRepository _SupplierRepository;
-
         public readonly ILogger<ProductService> _logger;
         private readonly IConfiguration _Configuration;
-
 
         public ProductService(IProductRepository productRepository,
                               ISupplierRepository supplierRepository,
@@ -32,7 +30,6 @@ namespace Shop.Production.Api.Infrastructure.Services
             this._Configuration = configuration;
             this._logger = logger;
         }
-
 
         /// <summary>
         /// Metodo para obtener la lista de producto. Falta obtener el dato de categoria; hay que realizar el repositorio.
@@ -49,18 +46,15 @@ namespace Shop.Production.Api.Infrastructure.Services
                 var query = (from product in products
                              join supplier in suppliers
                              on product.SupplierId equals supplier.SupplierId
-                             select new ProductServiceResultModel
+                             select new ProductServiceResultReportModel
                              {
                                  ProductId = product.ProductId,
                                  ProductName = product.ProductName,
+                                 CompanyName = supplier.CompanyName,
                                  SupplierId = product.SupplierId,
                                  CategoryId = product.CategoryId,
                                  UnitPrice = product.UnitPrice,
-                                 Discontinued = product.Discontinued,
-                                 CreationDate = product.CreationDate,
-                                 ModifyDate = product.ModifyDate,
-                                 DeletedDate = product.DeletedDate,
-                                 Deleted = product.Deleted
+                                 Discontinued = product.Discontinued
                              }).ToList();
 
                 productServiceResult.Data = query;
@@ -76,65 +70,7 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             return productServiceResult;
         }
-        public ProductServiceResultCore GetProductByID(int id)
-        {
-            ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
-            try
-            {
-                // Product oProduct = await _ProductRepository.GetById(id);
-                // Supplier oSupplier = await _SupplierRepository.GetById(oProduct.SupplierId);
-
-                var oProduct = _ProductRepository.FindAll(pProducts => !pProducts.Deleted);
-                var oSupplier = _SupplierRepository.FindAll(sSupplier => !sSupplier.Deleted);
-                var query = (from product in oProduct
-                             join supplier in oSupplier
-                             on product.SupplierId equals supplier.SupplierId
-                             select new ProductServiceResultModel
-                             {
-                                 ProductId = product.ProductId,
-                                 ProductName = product.ProductName,
-                                 SupplierId = product.SupplierId,
-                                 CategoryId = product.CategoryId,
-                                 UnitPrice = product.UnitPrice,
-                                 Discontinued = product.Discontinued,
-                                 CreationDate = product.CreationDate,
-                                 ModifyDate = product.ModifyDate,
-                                 DeletedDate = product.DeletedDate,
-                                 Deleted = product.Deleted,
-                                 CompanyName = supplier.CompanyName
-
-                             }).ToList();
-
-                productServiceResult.Data = query;
-
-                #region Comentario2
-                //productServiceResult.Data = new ProductServiceResultModels()
-                //{
-                //    ProductId = product.ProductId,
-                //    ProductName = product.ProductName,
-                //    SupplierId = product.SupplierId,
-                //    CategoryId = product.CategoryId,
-                //    UnitPrice = product.UnitPrice,
-                //    Discontinued = product.Discontinued,
-                //    CreationDate = product.CreationDate,
-                //    ModifyDate = product.ModifyDate,
-                //    DeletedDate = product.DeletedDate,
-                //    Deleted = product.Deleted
-                //};
-                #endregion
-
-                productServiceResult.Success = true;
-                productServiceResult.Message = "Producto obtenido";
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error: {e.Message}");
-                productServiceResult.Success = true;
-                productServiceResult.Message = "Error obteniendo los productos";
-            }
-            return  productServiceResult;
-        }
-        public async Task<ProductServiceResultCore> SaveProduct(ProductServiceResultModel oProductServiceResultModel)
+        public async Task<ProductServiceResultCore> SaveProduct(ProductServiceResultAddModel oProductServiceResultModel)
         {
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
 
@@ -149,16 +85,13 @@ namespace Shop.Production.Api.Infrastructure.Services
 
                 Product newProduct = new Product()
                 {
-                    ProductId = oProductServiceResultModel.ProductId,
                     ProductName = oProductServiceResultModel.ProductName,
                     SupplierId = oProductServiceResultModel.SupplierId,
                     CategoryId = oProductServiceResultModel.CategoryId,
                     UnitPrice = oProductServiceResultModel.UnitPrice,
                     Discontinued = oProductServiceResultModel.Discontinued,
-                    CreationDate = oProductServiceResultModel.CreationDate,
-                    ModifyDate = oProductServiceResultModel.ModifyDate,
-                    DeletedDate = oProductServiceResultModel.DeletedDate,
-                    Deleted = oProductServiceResultModel.Deleted
+                    CreationUser = oProductServiceResultModel.CreationUser,
+                    CreationDate = oProductServiceResultModel.CreationDate
                 };
                 await _ProductRepository.Add(newProduct);
                 await _ProductRepository.Commit();
@@ -176,23 +109,26 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return productServiceResult;
         }
-
-        public async Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModel oProductServiceResultModel)
+        public async Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModifyModel oProductServiceResultModifyModel)
         {
             ProductServiceResultCore resultProduct = new ProductServiceResultCore();
 
             try
             {
-                var productUpdated =  await _ProductRepository.GetById(oProductServiceResultModel.ProductId);
+                Product productUpdated = await _ProductRepository.GetById(oProductServiceResultModifyModel.ProductId);
 
-                productUpdated.ProductName = oProductServiceResultModel.ProductName;
-                productUpdated.SupplierId = oProductServiceResultModel.SupplierId;
-                productUpdated.CategoryId = oProductServiceResultModel.CategoryId;
-                productUpdated.UnitPrice = oProductServiceResultModel.UnitPrice;
-                productUpdated.Discontinued = oProductServiceResultModel.Discontinued;
+                productUpdated.ProductName = oProductServiceResultModifyModel.ProductName;
+                productUpdated.SupplierId = oProductServiceResultModifyModel.SupplierId;
+                productUpdated.CategoryId = oProductServiceResultModifyModel.CategoryId;
+                productUpdated.UnitPrice = oProductServiceResultModifyModel.UnitPrice;
+                productUpdated.Discontinued = oProductServiceResultModifyModel.Discontinued;
+                productUpdated.UserMod = oProductServiceResultModifyModel.UserMod;
+                productUpdated.ModifyDate = oProductServiceResultModifyModel.ModifyDate;
 
                 _ProductRepository.Update(productUpdated);
                 await _ProductRepository.Commit();
+
+                resultProduct.Data = productUpdated;
                 resultProduct.Message = "Producto actualizado correctamente.";
             }
             catch (Exception e)
@@ -203,33 +139,61 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return resultProduct;
         }
-        public async Task<ProductServiceResultCore> RemoveProduct(ProductServiceResultDeletedModel productDeletedModel)
+        public async Task<ProductServiceResultCore> RemoveProduct(int id)
         {
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
+            ProductServiceResultDeletedModel productDeleteModel = new ProductServiceResultDeletedModel();
             try
             {
-                Product oProduct = await _ProductRepository.GetById(productDeletedModel.ProductId);
+                Product oProduct = await _ProductRepository.GetById(id);
 
                 oProduct.Deleted = true;
-                oProduct.UserDeleted = productDeletedModel.UserDeleted;
-                oProduct.DeletedDate = productDeletedModel.DeletedDate;
+                oProduct.UserDeleted = productDeleteModel.UserDeleted;
+                oProduct.DeletedDate = productDeleteModel.DeletedDate;
 
                 _ProductRepository.Update(oProduct);
                 await _ProductRepository.Commit();
 
                 productServiceResult.Success = true;
-                productServiceResult.Message = "Producto consultado por ID";
+                productServiceResult.Message = "Producto eliminado";
 
             }
             catch (Exception e)
             {
                 _logger.LogError($"{e.Message}");
                 productServiceResult.Success = false;
-                productServiceResult.Message = "Error obteniendo los datos del producto";
+                productServiceResult.Message = "Error eliminando el producto";
             }
             return productServiceResult;
         }
+        public async Task<ProductServiceResultCore> GetProductById(int id)
+        {
+            ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
+            try
+            {
+                var oProduct = await _ProductRepository.GetById(id);
 
+                if (!oProduct.Deleted)
+                {
+                    productServiceResult.Data = oProduct;
+                    productServiceResult.Message = "Producto encontrado";
+                }
+                else
+                {
+
+                    productServiceResult.Message = "Producto eliminado";
+                    productServiceResult.Data = null;
+                    productServiceResult.Success = true;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"{e.Message}");
+                productServiceResult.Message = "Error filtrando el producto";
+                productServiceResult.Success = false;
+            }
+            return productServiceResult;
+        }
         public async Task<bool> ValidateProduct(string productName)
         {
 

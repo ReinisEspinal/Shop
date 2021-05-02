@@ -4,6 +4,8 @@ using Shop.Production.Api.Infrastructure.Services.Contracts;
 using Shop.Shared.Core;
 using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models;
 using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
+using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Product;
+using System.Threading.Tasks;
 
 namespace Shop.Production.Api.Controllers
 {
@@ -16,6 +18,7 @@ namespace Shop.Production.Api.Controllers
         {
             this._IProductService = iProductService;
         }
+
         [HttpGet]
         public ActionResult<ServiceReponse> Get()
         {
@@ -29,26 +32,47 @@ namespace Shop.Production.Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<ActionResult<ServiceReponse>> GetById(int id)
+        {
+            return await _IProductService.GetProductById(id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServiceReponse>> Create(ProductServiceResultAddModel productServiceResult)
+        {
+            return await _IProductService.SaveProduct(productServiceResult);
+        }
+
         [HttpPut]
-        public ActionResult<ServiceReponse> Edit(ProductServiceResultModel objectProductModify)
+        public async Task<ActionResult<ServiceReponse>> Edit(ProductServiceResultModifyModel objectProductModify)
         {
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
-            var product = new ProductServiceResultModel()
+
+            var product = new ProductServiceResultModifyModel()
             {
                 ProductId = objectProductModify.ProductId,
                 ProductName = objectProductModify.ProductName,
                 SupplierId = objectProductModify.SupplierId,
                 CategoryId = objectProductModify.CategoryId,
                 UnitPrice = objectProductModify.UnitPrice,
-                Discontinued = objectProductModify.Discontinued
+                Discontinued = objectProductModify.Discontinued,
+                UserMod = objectProductModify.UserMod
+
             };
 
-            _IProductService.UpdateProduct(objectProductModify);
-
-            productServiceResult.Success = true;
-            productServiceResult.Message = "Producto editado";
-
-            return productServiceResult;
+            await _IProductService.UpdateProduct(product);
+            return Ok();
         }
+
+        [HttpDelete]
+        [Route("Delete/{id:int}")]
+        public async Task<ActionResult<ServiceReponse>> Delete(int id)
+        {
+            return await _IProductService.RemoveProduct(id);
+        }
+
+
     }
 }

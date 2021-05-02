@@ -51,10 +51,10 @@ namespace Shop.Shared.Core
         public async Task<TEntity> GetById(int value)
         {
             var x = await _entity.FindAsync(value);
+
             return x;
         }
-
-
+    
         public virtual void Remove(TEntity entity)
         {
             _entity.Remove(entity);

@@ -11,5 +11,11 @@ namespace Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Prod
         public bool Deleted { get; set; }
         public int UserDeleted { get; set; }
         public DateTime DeletedDate { get; set; }
+
+        public ProductServiceResultDeletedModel()
+        {
+            this.DeletedDate = System.DateTime.Now;
+        }
+
     }
 }
