@@ -46,7 +46,7 @@ namespace Shop.Production.Api.Infrastructure.Services
                 var query = (from product in products
                              join supplier in suppliers
                              on product.SupplierId equals supplier.SupplierId
-                             select new ProductServiceResultReportModel
+                             select new ProductServiceResultGetModel
                              {
                                  ProductId = product.ProductId,
                                  ProductName = product.ProductName,

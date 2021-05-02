@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Product
 {
-    public class ProductServiceResultReportModel
+    public class ProductServiceResultGetModel
     {
         public int ProductId { get; set; }
         public int SupplierId { get; set; }
