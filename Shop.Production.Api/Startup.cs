@@ -32,6 +32,9 @@ namespace Shop.Production.Api
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddTransient<ISupplierService, SupplierService>();
 
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<ICategoryService, CategoryService>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

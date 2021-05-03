@@ -16,17 +16,19 @@ namespace Shop.Production.Api.Infrastructure.Services
     {
         public readonly IProductRepository _ProductRepository;
         public readonly ISupplierRepository _SupplierRepository;
+        public readonly ICategoryRepository _CategoryRepository;
         public readonly ILogger<ProductService> _logger;
         private readonly IConfiguration _Configuration;
 
         public ProductService(IProductRepository productRepository,
                               ISupplierRepository supplierRepository,
-
+                              ICategoryRepository categoryRepository,
                                ILogger<ProductService> logger,
                               IConfiguration configuration)
         {
             this._ProductRepository = productRepository;
             this._SupplierRepository = supplierRepository;
+            this._CategoryRepository = categoryRepository;
             this._Configuration = configuration;
             this._logger = logger;
         }
@@ -41,20 +43,25 @@ namespace Shop.Production.Api.Infrastructure.Services
             try
             {
                 var products = _ProductRepository.FindAll(pProducts => !pProducts.Deleted);
-                var suppliers = _SupplierRepository.FindAll(sSupplier => !sSupplier.Deleted);
-
+                var suppliers = _SupplierRepository.FindAll(pProducts => !pProducts.Deleted);
+                var categories = _CategoryRepository.FindAll(cCategory => !cCategory.Deleted);
                 var query = (from product in products
                              join supplier in suppliers
-                             on product.SupplierId equals supplier.SupplierId
+                             on product.SupplierId 
+                             equals supplier.SupplierId join
+                             category in categories on product.CategoryId equals category.CategoryId
                              select new ProductServiceResultGetModel
                              {
                                  ProductId = product.ProductId,
                                  ProductName = product.ProductName,
+                                 CategoryName = category.CategoryName,
                                  CompanyName = supplier.CompanyName,
+                                 //Realizar a modificacion del modelo para eliminar estas propedades
                                  SupplierId = product.SupplierId,
                                  CategoryId = product.CategoryId,
                                  UnitPrice = product.UnitPrice,
-                                 Discontinued = product.Discontinued
+                                 Discontinued = product.Discontinued,
+
                              }).ToList();
 
                 productServiceResult.Data = query;

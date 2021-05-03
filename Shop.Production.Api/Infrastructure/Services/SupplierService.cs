@@ -13,10 +13,10 @@ namespace Shop.Production.Api.Infrastructure.Services
     public class SupplierService : ISupplierService
     {
         private readonly ISupplierRepository _ISupplierRepository;
-        private readonly ILogger<Supplier> _ILogger;
+        private readonly ILogger<SupplierService> _ILogger;
         private readonly IConfiguration _IConfiguration;
 
-        public SupplierService(ISupplierRepository iSupplierRepository, ILogger<Supplier> iLogger, IConfiguration iConfiguration)
+        public SupplierService(ISupplierRepository iSupplierRepository, ILogger<SupplierService> iLogger, IConfiguration iConfiguration)
         {
             this._ISupplierRepository = iSupplierRepository;
             this._ILogger = iLogger;

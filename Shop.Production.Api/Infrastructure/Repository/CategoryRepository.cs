@@ -7,7 +7,7 @@ namespace Shop.Production.Api.Infrastructure.Repository
 {
     public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
-        private readonly ProductionContext _Db;
+
         public CategoryRepository(ProductionContext db) : base(db)
         {
         }

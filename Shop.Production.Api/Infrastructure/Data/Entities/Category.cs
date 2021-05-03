@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Shop.Shared.Core;
 
 
 namespace Shop.Production.Api.Infrastructure.Data.Entities
 {
+    [Table("Categories", Schema="Production")]
     public class Category : BaseEntity
     {
         public Category()
