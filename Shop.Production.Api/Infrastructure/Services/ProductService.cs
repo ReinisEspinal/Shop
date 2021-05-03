@@ -42,21 +42,18 @@ namespace Shop.Production.Api.Infrastructure.Services
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
             try
             {
-                var products = _ProductRepository.FindAll(pProducts => !pProducts.Deleted);
-                var suppliers = _SupplierRepository.FindAll(pProducts => !pProducts.Deleted);
-                var categories = _CategoryRepository.FindAll(cCategory => !cCategory.Deleted);
-                var query = (from product in products
-                             join supplier in suppliers
-                             on product.SupplierId 
-                             equals supplier.SupplierId join
-                             category in categories on product.CategoryId equals category.CategoryId
+
+                var query = (from product in _ProductRepository.FindAll()
+                             join supplier in _SupplierRepository.FindAll()
+                             on product.SupplierId equals supplier.SupplierId 
+                             join category in _CategoryRepository.FindAll() on product.CategoryId equals category.CategoryId
                              select new ProductServiceResultGetModel
                              {
                                  ProductId = product.ProductId,
                                  ProductName = product.ProductName,
                                  CategoryName = category.CategoryName,
                                  CompanyName = supplier.CompanyName,
-                                 //Realizar a modificacion del modelo para eliminar estas propedades
+  
                                  SupplierId = product.SupplierId,
                                  CategoryId = product.CategoryId,
                                  UnitPrice = product.UnitPrice,

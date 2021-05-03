@@ -39,13 +39,17 @@ namespace Shop.Shared.Core
             return await _entity.AnyAsync(filter);
         }
 
-        public async Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
             return await _entity.SingleOrDefaultAsync(filter);
         }
-        public IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> filter)
+        /*public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> filter)
         {
             return _entity.Where(filter);
+        }*/
+        public virtual IEnumerable<TEntity> FindAll()
+        {
+            return _entity;
         }
 
         public async Task<TEntity> GetById(int value)

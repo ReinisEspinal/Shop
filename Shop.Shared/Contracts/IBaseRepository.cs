@@ -9,7 +9,8 @@ namespace Shop.Shared.Contracts
     {
         Task<TEntity> GetById(int value);
         Task<TEntity> Find(Expression<Func<TEntity, bool>> filter);
-        IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> filter);
+        //IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> filter);
+        IEnumerable<TEntity> FindAll();
         Task Add(TEntity entity);
         Task Add(params TEntity[] entities);
         void Remove(TEntity entity);

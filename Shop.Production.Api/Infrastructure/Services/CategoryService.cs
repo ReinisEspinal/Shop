@@ -54,7 +54,7 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             try
             {
-                var x = _ICategoryRepository.FindAll(c => !c.Deleted);
+                var x = _ICategoryRepository.FindAll();
                 var query = (from category in x
                              select new CategoryServiceResultGetModel
                              {

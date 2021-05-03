@@ -27,7 +27,7 @@ namespace Shop.Production.Api.Infrastructure.Services
             SupplierServiceResultCore supplierServiceResult = new SupplierServiceResultCore();
             try
             {
-                var oSupplier = _ISupplierRepository.FindAll(c => !c.Deleted);
+                var oSupplier = _ISupplierRepository.FindAll();
                 supplierServiceResult.Data = oSupplier;
                 supplierServiceResult.Message = "Lista de suplidores.";
                 supplierServiceResult.Success = true;
@@ -96,12 +96,11 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return supplierServicesResult;
         }
-    
-        /// <summary>
-        /// Porque llamar a la base de datos para editar. Porque no mandar todo simplemente desde el cliente
-        /// </summary>
-        /// <param name="supplierModifyModel"></param>
-        /// <returns></returns>
+
+        //Si es de mucho request no usar esta manera
+        //La otra forma es utilizar storeprocedure para controlar el performance
+        //Command text???
+
         public async Task<SupplierServiceResultCore> UpdateSupplier(SupplierServiceResultModifyModel supplierModifyModel)
         {
             SupplierServiceResultCore supplierServiceResult = new SupplierServiceResultCore();
@@ -126,7 +125,7 @@ namespace Shop.Production.Api.Infrastructure.Services
 
                 _ISupplierRepository.Update(supplieUpdate);
 
-                await  _ISupplierRepository.Commit();
+                await _ISupplierRepository.Commit();
                 supplierServiceResult.Success = true;
                 supplierServiceResult.Message = "Suplidor editado.";
             }
@@ -137,11 +136,6 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return supplierServiceResult;
         }
-        /// <summary>
-        /// Elimina un suplidor. Recibir o no el objeto?
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
 
         public async Task<SupplierServiceResultCore> DeleteSupplier(int id)
         {

@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Shop.Security.Users.Api": {
+    "Shop.Security.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
