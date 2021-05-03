@@ -8,6 +8,8 @@ namespace Shop.Production.Api.Infrastructure.Data.Entities
     public class Product : BaseEntity
     {
         public int ProductId { get; set; }
+        //Aplicar validaciones
+        
         public string ProductName { get; set; }
         public int SupplierId { get; set; }
         public int CategoryId { get; set; }

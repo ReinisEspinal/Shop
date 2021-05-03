@@ -54,19 +54,20 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             try
             {
-                var x = _ICategoryRepository.FindAll();
-                var query = (from category in x
-                             select new CategoryServiceResultGetModel
-                             {
-                                 CategoryName = category.CategoryName,
-                                 Description = category.Description
+                //var x = _ICategoryRepository.FindAll();
+                //var query = (from category in x
+                //             select new CategoryServiceResultGetModel
+                //             {
+                //                 CategoryName = category.CategoryName,
+                //                 Description = category.Description
 
-                             }).ToList();
+                //             }).ToList();
 
-                categoryServiceResult.Data = query;
+            categoryServiceResult.Data=  _ICategoryRepository.FindAll();
 
+                //categoryServiceResult.Data = query;
                 categoryServiceResult.Success = true;
-                categoryServiceResult.Message = "Lista de categorias.";
+                // categoryServiceResult.Message = "Lista de categorias."; No se envia, no es necesario
             }
             catch (System.Exception e)
             {

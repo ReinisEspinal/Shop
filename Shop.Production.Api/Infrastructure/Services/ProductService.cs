@@ -42,11 +42,16 @@ namespace Shop.Production.Api.Infrastructure.Services
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
             try
             {
+                //Se usa el beneficio de los indices con esta modificacion
+
+                /*Utilizar otro procedimiento en caso de que el codigo para consultar esta muy cargado 
+                Y se observe limpio*/
 
                 var query = (from product in _ProductRepository.FindAll()
                              join supplier in _SupplierRepository.FindAll()
                              on product.SupplierId equals supplier.SupplierId 
-                             join category in _CategoryRepository.FindAll() on product.CategoryId equals category.CategoryId
+                             join category in _CategoryRepository.FindAll() 
+                             on product.CategoryId equals category.CategoryId
                              select new ProductServiceResultGetModel
                              {
                                  ProductId = product.ProductId,
@@ -58,15 +63,16 @@ namespace Shop.Production.Api.Infrastructure.Services
                                  CategoryId = product.CategoryId,
                                  UnitPrice = product.UnitPrice,
                                  Discontinued = product.Discontinued,
-
                              }).ToList();
 
                 productServiceResult.Data = query;
-                productServiceResult.Message = "Lista de productos";
+               // productServiceResult.Message = "Lista de productos"; Esto no es necesario, mandar null.
                 productServiceResult.Success = true;
             }
             catch (Exception e)
             {
+                //Envia la informacion a azure/amazon/Cloud... y ver el estado de la aplicacion
+                //Todos deben utilizar ILogger
                 _logger.LogError($"Error {e.Message}");
                 productServiceResult.Success = false;
                 productServiceResult.Message = "Error obteniendo los productos";

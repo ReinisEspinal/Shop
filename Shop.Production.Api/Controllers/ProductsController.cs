@@ -34,6 +34,7 @@ namespace Shop.Production.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
+        //Form <- Para decir la manera de mandar la informacion
         public async Task<ActionResult<ServiceReponse>> GetById(int id)
         {
             return await _IProductService.GetProductById(id);
