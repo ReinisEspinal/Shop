@@ -21,6 +21,7 @@ namespace Shop.Production.Api.Infrastructure.Context
 
 
         }
+
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }

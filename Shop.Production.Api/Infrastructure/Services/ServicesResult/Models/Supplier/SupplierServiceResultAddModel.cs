@@ -7,6 +7,7 @@ namespace Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Supp
 {
     public class SupplierServiceResultAddModel
     {
+
         public string CompanyName { get; set; }
         public string ContactName { get; set; }
         public string ContactTitle { get; set; }
