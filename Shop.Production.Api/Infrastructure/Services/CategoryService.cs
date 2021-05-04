@@ -54,18 +54,16 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             try
             {
-                //var x = _ICategoryRepository.FindAll();
-                //var query = (from category in x
-                //             select new CategoryServiceResultGetModel
-                //             {
-                //                 CategoryName = category.CategoryName,
-                //                 Description = category.Description
+                var x = _ICategoryRepository.FindAll();
+                var query = (from category in x
+                             select new CategoryServiceResultGetModel
+                             {
+                                 CategoryName = category.CategoryName,
+                                 Description = category.Description
 
-                //             }).ToList();
+                             }).ToList();
 
-            categoryServiceResult.Data=  _ICategoryRepository.FindAll();
-
-                //categoryServiceResult.Data = query;
+                categoryServiceResult.Data = query;
                 categoryServiceResult.Success = true;
                 // categoryServiceResult.Message = "Lista de categorias."; No se envia, no es necesario
             }
@@ -101,6 +99,8 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return categoryServiceResult;
         }
+
+        //Agregar validaciones
         public async Task<CategoryServiceResultCore> SaveCategory(CategoryServiceResultAddModel category)
         {
             var categoryServiceResult = new CategoryServiceResultCore();
@@ -126,6 +126,8 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return categoryServiceResult;
         }
+
+        //Agregar validaciones
         public async Task<CategoryServiceResultCore> UpdateCategory(CategoryServiceResultModifyModel category)
         {
             var categoryServiceResult = new CategoryServiceResultCore();

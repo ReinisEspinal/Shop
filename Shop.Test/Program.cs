@@ -12,26 +12,10 @@ namespace Shop.Test
     {
         static void Main(string[] args)
         {
-            //using (ProductionContext db = new ProductionContext("Server=MSI\\SQLEXPRESS01;Database=SHOP;Trusted_Connection=True;MultipleActiveResultSets=true"))
-            //{
+            //Consumir el servicio(Forma correcta de hacer prueba)
+            //Definir los EndPoints en la configuracion del Json...
+            //HttpClient
 
-                //        var newProduct = new Product()
-                //        {
-                //            ProductId = 1,
-                //            ProductName = "Product HHYDP",
-                //            SupplierId = 1,
-                //            CategoryId = 1,
-                //            UnitPrice = 92121,
-                //            Discontinued = false
-
-                //        };
-
-                //        _ProductRepository.Update(newProduct);
-                //        await _ProductRepository.Commit();
-                //        // Console.WriteLine(x.UnitPrice);
-                //        Console.ReadLine();
-
-                //  }
-            }
         }
     }
+}
