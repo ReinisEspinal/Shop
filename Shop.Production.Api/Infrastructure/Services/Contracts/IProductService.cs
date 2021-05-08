@@ -15,5 +15,6 @@ namespace Shop.Production.Api.Infrastructure.Services.Contracts
         Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModifyModel oProductServiceResultModel);
         Task<ProductServiceResultCore> RemoveProduct(int id);
         Task<ProductServiceResultCore> GetProductById(int id);
+        Task<bool> ValidateProduct(string productName);
     }
 }

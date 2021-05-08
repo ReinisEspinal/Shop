@@ -7,5 +7,6 @@ namespace Shop.Production.Api.Infrastructure.Repository.Contracts
 {
     public interface ISupplierRepository : IBaseRepository<Supplier>
     {
+  
     }
 }

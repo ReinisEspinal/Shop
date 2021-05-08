@@ -19,7 +19,7 @@ namespace Shop.Shared.Core
             this._entity = context.Set<TEntity>();
         }
 
-        public virtual async Task  Add(TEntity entity)
+        public virtual async Task Add(TEntity entity)
         {
             await _entity.AddAsync(entity);
         }
@@ -38,11 +38,12 @@ namespace Shop.Shared.Core
         {
             return await _entity.AnyAsync(filter);
         }
-
+  
         public virtual async Task<TEntity> Find(Expression<Func<TEntity, bool>> filter)
         {
             return await _entity.SingleOrDefaultAsync(filter);
         }
+
         /*public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> filter)
         {
             return _entity.Where(filter);
@@ -58,7 +59,8 @@ namespace Shop.Shared.Core
 
             return x;
         }
-    
+   
+
         public virtual void Remove(TEntity entity)
         {
             _entity.Remove(entity);

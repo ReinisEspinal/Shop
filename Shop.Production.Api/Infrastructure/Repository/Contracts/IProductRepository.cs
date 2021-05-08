@@ -11,6 +11,5 @@ namespace Shop.Production.Api.Infrastructure.Repository.Contracts
 {
     public interface IProductRepository : IBaseRepository<Product>
     {
-  
     }
 }

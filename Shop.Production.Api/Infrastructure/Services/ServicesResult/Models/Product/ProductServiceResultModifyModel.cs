@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,18 +8,34 @@ namespace Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Prod
 {
     public class ProductServiceResultModifyModel
     {
+        [Required]
+        [Range(1, 300)]
+        public int ProductId { get; set; }
+        [StringLength(20)]
+        [Display(Name = "Product Name")]
+        [Required(ErrorMessage = "Product Name  is mandatory")]
+        public string ProductName { get; set; }
+        [Required]
+        [Range(1, 300)]
+        public int SupplierId { get; set; }
+        [Required]
+        [Range(1, 300)]
+        public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Unit Price is mandatory")]
+        [Range(1, 500000)]
+        public decimal UnitPrice { get; set; }
+        [Required(ErrorMessage = "Discontinued is mandatory")]
+        public bool Discontinued { get; set; }
+        [Required]
+        [Range(1, 300)]
+        public int UserMod { get; set; }
         public DateTime ModifyDate { get; }
+
         public ProductServiceResultModifyModel()
         {
             this.ModifyDate = System.DateTime.Now;
         }
-        public int ProductId { get; set; }
-        public string ProductName { get; set; }
-        public int SupplierId { get; set; }
-        public int CategoryId { get; set; }
-        public decimal UnitPrice { get; set; }
-        public bool Discontinued { get; set; }
-        public int UserMod { get; set; }
+
 
     }
 }

@@ -20,9 +20,6 @@ namespace Shop.Production.Api.Infrastructure.Repository
         public override IEnumerable<Product> FindAll()
         {
             return base.FindAll().Where(product => !product.Deleted);
-        }
-
-       
-
+        } 
     }
 }
