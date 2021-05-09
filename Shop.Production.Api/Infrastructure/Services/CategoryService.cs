@@ -15,13 +15,17 @@ namespace Shop.Production.Api.Infrastructure.Services
         private readonly ICategoryRepository _ICategoryRepository;
         private readonly ILogger<CategoryService> _Ilogger;
         private readonly IConfiguration _IConfiguration;
+        private readonly IProductRepository _IProductRepository;
+
         public CategoryService(ICategoryRepository iCategoryRepository,
+                                IProductRepository iProductRepository,
                                ILogger<CategoryService> iLogger,
                                IConfiguration iConfiguration)
         {
             this._ICategoryRepository = iCategoryRepository;
             this._Ilogger = iLogger;
             this._IConfiguration = iConfiguration;
+            this._IProductRepository = iProductRepository;
         }
         public async Task<CategoryServiceResultCore> DeleteCategory(int id)
         {
@@ -31,14 +35,32 @@ namespace Shop.Production.Api.Infrastructure.Services
             try
             {
                 var oCategory = await _ICategoryRepository.GetById(id);
-                oCategory.Deleted = categoryDeleteModel.Deleted;
-                oCategory.DeletedDate = categoryDeleteModel.DeletedDate;
-                oCategory.UserDeleted = categoryDeleteModel.UserDeleted;
 
-                _ICategoryRepository.Update(oCategory);
-                await _ICategoryRepository.Commit();
-                categoryServiceResult.Success = true;
-                categoryServiceResult.Message = "Categoria eliminada.";
+                if (oCategory == null || oCategory.Deleted == true)
+                {
+                    categoryServiceResult.Success = false;
+                    categoryServiceResult.Message = "La categoria no existe";
+                }
+                else
+                {
+                    if (_IProductRepository.FindAll().Where(c => c.CategoryId == id).Count() > 0)
+                    {
+                        categoryServiceResult.Success = false;
+                        categoryServiceResult.Message = "Existen productos con la categoria asignada, quitar los productos con la categoria primero.";
+                    }
+                    else
+                    {
+                        oCategory.Deleted = categoryDeleteModel.Deleted;
+                        oCategory.DeletedDate = categoryDeleteModel.DeletedDate;
+                        oCategory.UserDeleted = categoryDeleteModel.UserDeleted;
+
+                        _ICategoryRepository.Update(oCategory);
+                        await _ICategoryRepository.Commit();
+                        categoryServiceResult.Success = true;
+                        categoryServiceResult.Message = "Categoria eliminada.";
+                    }
+                }
+
             }
             catch (Exception e)
             {
@@ -54,8 +76,7 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             try
             {
-                var x = _ICategoryRepository.FindAll();
-                var query = (from category in x
+                var query = (from category in _ICategoryRepository.FindAll()
                              select new CategoryServiceResultGetModel
                              {
                                  CategoryName = category.CategoryName,
@@ -65,8 +86,10 @@ namespace Shop.Production.Api.Infrastructure.Services
 
                 categoryServiceResult.Data = query;
                 categoryServiceResult.Success = true;
-                // categoryServiceResult.Message = "Lista de categorias."; No se envia, no es necesario
             }
+
+            // categoryServiceResult.Message = "Lista de categorias."; No se envia, no es necesario
+
             catch (System.Exception e)
             {
 
@@ -83,13 +106,20 @@ namespace Shop.Production.Api.Infrastructure.Services
             try
             {
                 var x = await _ICategoryRepository.GetById(id);
-                categoryServiceResultGetModel.CategoryName = x.CategoryName;
-                categoryServiceResultGetModel.Description = x.Description;
 
-                categoryServiceResult.Data = categoryServiceResultGetModel;
+                if (x != null || x.Deleted == false)
+                {
+                    categoryServiceResultGetModel.CategoryName = x.CategoryName;
+                    categoryServiceResultGetModel.Description = x.Description;
 
-                categoryServiceResult.Success = true;
-                categoryServiceResult.Message = "Categoria filtrada por numero de Id";
+                    categoryServiceResult.Data = categoryServiceResultGetModel;
+                    categoryServiceResult.Success = true;
+                }
+                else
+                {
+                    categoryServiceResult.Success = false;
+                    categoryServiceResult.Message = "La categoria no existe";
+                }
             }
             catch (Exception e)
             {
@@ -107,17 +137,22 @@ namespace Shop.Production.Api.Infrastructure.Services
             var categoryServiceResult = new CategoryServiceResultCore();
             try
             {
-                await _ICategoryRepository.Add(new Data.Entities.Category()
+                if (await ValidateCategory(category.CategoryName) == true)
                 {
-                    CategoryName = category.CategoryName,
-                    Description = category.Description,
-                    CreationUser = category.CreationUser,
-                    CreationDate = category.CreationDate
-                });
+                    await _ICategoryRepository.Add(new Data.Entities.Category()
+                    {
+                        CategoryName = category.CategoryName,
+                        Description = category.Description,
+                        CreationUser = category.CreationUser,
+                        CreationDate = category.CreationDate
+                    });
 
-                await _ICategoryRepository.Commit();
-                categoryServiceResult.Success = true;
-                categoryServiceResult.Message = "Categoria insertada.";
+                    await _ICategoryRepository.Commit();
+                    categoryServiceResult.Success = true;
+                    categoryServiceResult.Message = "Categoria insertada.";
+                }
+                categoryServiceResult.Success = false;
+                categoryServiceResult.Message = "El nombre de categoria ya existe.";
             }
             catch (Exception e)
             {
@@ -137,16 +172,23 @@ namespace Shop.Production.Api.Infrastructure.Services
             {
                 var oCategory = await _ICategoryRepository.GetById(category.CategoryId);
 
-                oCategory.CategoryName = category.CategoryName;
-                oCategory.Description = category.Description;
-                oCategory.UserMod = category.UserMod;
-                oCategory.ModifyDate = category.ModifyDate;
+                if (await ValidateCategory(oCategory.CategoryName) == false)
+                {
+                    oCategory.CategoryName = category.CategoryName;
+                    oCategory.Description = category.Description;
+                    oCategory.UserMod = category.UserMod;
+                    oCategory.ModifyDate = category.ModifyDate;
 
-                _ICategoryRepository.Update(oCategory);
-                categoryServiceResult.Success = true;
-                categoryServiceResult.Message = "Categoria editada.";
+                    _ICategoryRepository.Update(oCategory);
+                    categoryServiceResult.Success = true;
+                    categoryServiceResult.Message = "Categoria editada.";
 
-                await _ICategoryRepository.Commit();
+                    await _ICategoryRepository.Commit();
+                    return categoryServiceResult;
+                }
+                categoryServiceResult.Success = false;
+                categoryServiceResult.Message = "El nombre de categoria ya existe.";
+
             }
             catch (Exception e)
             {
@@ -156,6 +198,11 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
 
             return categoryServiceResult;
+        }
+
+        public async Task<bool> ValidateCategory(string categoryName)
+        {
+            return await _ICategoryRepository.Exists(category => category.CategoryName == categoryName);
         }
     }
 }

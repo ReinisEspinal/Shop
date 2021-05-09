@@ -49,22 +49,9 @@ namespace Shop.Production.Api.Controllers
         [HttpPut]
         public async Task<ActionResult<ServiceReponse>> Edit(ProductServiceResultModifyModel objectProductModify)
         {
-            ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
 
-            var product = new ProductServiceResultModifyModel()
-            {
-                ProductId = objectProductModify.ProductId,
-                ProductName = objectProductModify.ProductName,
-                SupplierId = objectProductModify.SupplierId,
-                CategoryId = objectProductModify.CategoryId,
-                UnitPrice = objectProductModify.UnitPrice,
-                Discontinued = objectProductModify.Discontinued,
-                UserMod = objectProductModify.UserMod
-
-            };
-
-            await _IProductService.UpdateProduct(product);
-            return Ok();
+            return await _IProductService.UpdateProduct(objectProductModify);
+    
         }
 
         [HttpDelete]

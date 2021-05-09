@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Shop.Production.Api.Infrastructure.Context;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop.Production.Api.Infrastructure.Repository
 {
@@ -13,7 +14,11 @@ namespace Shop.Production.Api.Infrastructure.Repository
         public SupplierRepository(ProductionContext db) : base(db)
         {
         }
+        public override IEnumerable<Supplier> FindAll()
+        {
+            return base.FindAll().Where(s => !s.Deleted);
 
+        }
 
     }
 }

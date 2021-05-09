@@ -65,6 +65,11 @@ namespace Shop.Production.Api.Infrastructure.Services
 
             return productServiceResult;
         }
+
+        /*
+             Verifica todos los nombres de los productos tanto los eliminados como los existentes.
+            Si existe y esta eliminado como quiera dira que existe.
+        */
         public async Task<ProductServiceResultCore> SaveProduct(ProductServiceResultAddModel oProductServiceResultModel)
         {
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
@@ -92,7 +97,7 @@ namespace Shop.Production.Api.Infrastructure.Services
                 await _ProductRepository.Commit();
 
                 productServiceResult.Success = true;
-                productServiceResult.Data = newProduct;
+                productServiceResult.Data = oProductServiceResultModel;
                 productServiceResult.Message = "Producto agregado";
 
             }
@@ -105,6 +110,13 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return productServiceResult;
         }
+        
+        /*
+         Puedo editar un cliente con una categoria que no existe, lo mejor es realizar una clase
+        con las validaciones y llamar esta en el modelo del servicio para que no permita
+        colocar datos de entidades que no existe o  que esten eliminadas
+         */
+
         public async Task<ProductServiceResultCore> UpdateProduct(ProductServiceResultModifyModel oProductServiceResultModifyModel)
         {
             ProductServiceResultCore resultProduct = new ProductServiceResultCore();
@@ -112,26 +124,38 @@ namespace Shop.Production.Api.Infrastructure.Services
             try
             {
                 Product productUpdated = await _ProductRepository.GetById(oProductServiceResultModifyModel.ProductId);
-                if (await ValidateProduct(oProductServiceResultModifyModel.ProductName))
+
+                if (productUpdated == null || productUpdated.Deleted == true)
                 {
-                    resultProduct.Success = false;
-                    resultProduct.Message = $"Este modelo {oProductServiceResultModifyModel.ProductName} ya esta registrado";
+                    resultProduct.Message = "El producto no existe";
                     return resultProduct;
                 }
+                else
+                {
+                    if (await ValidateProduct(oProductServiceResultModifyModel.ProductName))
+                    {
 
-                productUpdated.ProductName = oProductServiceResultModifyModel.ProductName;
-                productUpdated.SupplierId = oProductServiceResultModifyModel.SupplierId;
-                productUpdated.CategoryId = oProductServiceResultModifyModel.CategoryId;
-                productUpdated.UnitPrice = oProductServiceResultModifyModel.UnitPrice;
-                productUpdated.Discontinued = oProductServiceResultModifyModel.Discontinued;
-                productUpdated.UserMod = oProductServiceResultModifyModel.UserMod;
-                productUpdated.ModifyDate = oProductServiceResultModifyModel.ModifyDate;
+                        resultProduct.Message = $"Este producto '{oProductServiceResultModifyModel.ProductName}' ya esta registrado";
+                        resultProduct.Success = false;
+                    }
+                    else
+                    {
+                        productUpdated.ProductName = oProductServiceResultModifyModel.ProductName;
+                        productUpdated.SupplierId = oProductServiceResultModifyModel.SupplierId;
+                        productUpdated.CategoryId = oProductServiceResultModifyModel.CategoryId;
+                        productUpdated.UnitPrice = oProductServiceResultModifyModel.UnitPrice;
+                        productUpdated.Discontinued = oProductServiceResultModifyModel.Discontinued;
+                        productUpdated.UserMod = oProductServiceResultModifyModel.UserMod;
+                        productUpdated.ModifyDate = oProductServiceResultModifyModel.ModifyDate;
 
-                _ProductRepository.Update(productUpdated);
-                await _ProductRepository.Commit();
+                        _ProductRepository.Update(productUpdated);
+                        await _ProductRepository.Commit();
 
-                resultProduct.Data = productUpdated;
-                resultProduct.Message = "Producto actualizado correctamente.";
+                        resultProduct.Data = productUpdated;
+                        resultProduct.Message = "Producto actualizado correctamente.";
+                    }
+
+                }
             }
             catch (Exception e)
             {
@@ -149,12 +173,11 @@ namespace Shop.Production.Api.Infrastructure.Services
             {
                 Product oProduct = await _ProductRepository.GetById(id);
 
-                if (oProduct.Deleted == true)
+                if (oProduct == null || oProduct.Deleted == true)
                 {
                     productServiceResult.Message = "El producto no existe";
                     return productServiceResult;
                 }
-
                 oProduct.Deleted = true;
                 oProduct.UserDeleted = productDeleteModel.UserDeleted;
                 oProduct.DeletedDate = productDeleteModel.DeletedDate;
@@ -174,28 +197,49 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return productServiceResult;
         }
+     
+        
+        /*
+         Da problemas cuando hay un producto con una categoria eliminada o inexistente. Se agrego una validacion en el metodo de eliminar
+           de categoria para que verifique si aun existe un producto con data de categoria antes de eliminar la misma. Pero esta correcto
+            de esta forma?
+         */
         public async Task<ProductServiceResultCore> GetProductById(int id)
         {
             ProductServiceResultCore productServiceResult = new ProductServiceResultCore();
+            ProductServiceResultGetModel productGetModel = new ProductServiceResultGetModel();
             try
             {
                 var oProduct = await _ProductRepository.GetById(id);
 
-                if (!oProduct.Deleted)
+
+                if (oProduct ==null || oProduct.Deleted == true)
                 {
-                    productServiceResult.Data = oProduct;
-                    productServiceResult.Message = "Producto encontrado";
+                    productServiceResult.Message = "El producto no existe";
+                    productServiceResult.Data = null;
                     productServiceResult.Success = true;
                     return productServiceResult;
                 }
                 else
                 {
-
-                    productServiceResult.Message = "El producto esta eliminado";
-                    productServiceResult.Data = null;
+                    var query = (from product in _ProductRepository.FindAll().Where(c => c.ProductId == oProduct.ProductId)
+                                 join category in _CategoryRepository.FindAll().Where(c => c.CategoryId == oProduct.CategoryId)
+                                 on product.CategoryId equals category.CategoryId
+                                 join supplier in _SupplierRepository.FindAll().Where(c => c.SupplierId == oProduct.SupplierId)
+                                 on product.SupplierId equals supplier.SupplierId
+                                 select new ProductServiceResultGetModel
+                                 {
+                                     ProductId = product.ProductId,
+                                     ProductName = product.ProductName,
+                                     UnitPrice = product.UnitPrice,
+                                     Discontinued = product.Discontinued,
+                                     CategoryName = category.CategoryName,
+                                     CompanyName = supplier.CompanyName
+                                 });
+                    productServiceResult.Data = query;
+                    productServiceResult.Message = "Producto encontrado";
                     productServiceResult.Success = true;
                 }
-
             }
             catch (Exception e)
             {
@@ -205,6 +249,7 @@ namespace Shop.Production.Api.Infrastructure.Services
             }
             return productServiceResult;
         }
+
         public async Task<bool> ValidateProduct(string productName)
         {
 

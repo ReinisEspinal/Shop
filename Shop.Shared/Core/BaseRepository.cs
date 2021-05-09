@@ -75,5 +75,6 @@ namespace Shop.Shared.Core
         {
             _entity.Update(entity);
         }
+   
     }
 }
