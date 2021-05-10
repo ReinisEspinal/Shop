@@ -3,7 +3,7 @@ using Shop.Sale.Api.Data.Entity;
 
 namespace Shop.Sale.Api.Infraestructure.Repository.Contracts
 {
-    public interface IOderDerails : IBaseRepository<OrderDetails>
+    public interface IOrderDetailsRepository : IBaseRepository<OrderDetails>
     {
 
     }

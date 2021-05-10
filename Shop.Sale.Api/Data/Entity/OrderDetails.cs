@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shop.Shared.Core;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Sale.Api.Data.Entity
 {
     [Table(name:"OrderDetails",Schema ="Sales")]
-    public class OrderDetails
+    public class OrderDetails : BaseEntity
     {
         [Key]
         public int OrderId { get; set; }
