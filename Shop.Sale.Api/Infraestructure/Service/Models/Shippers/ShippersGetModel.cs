@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Sale.Api.Infraestructure.Service.Models.Shipper
 {
-    public class ShipperGetModel
+    public class ShippersGetModel
     {
         public int ShipperId { get; set; }
         public string CompanyName { get; set; }

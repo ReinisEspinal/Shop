@@ -14,9 +14,10 @@ namespace Shop.Sale.Api.Infraestructure.Context
         }
 
         public SaleContext(DbContextOptions<SaleContext> options) : base(options)
-        { 
+        {
         }
 
-        public virtual DbSet<Shipper> Sales { get; set;}
+        public virtual DbSet<Shippers> Shippers { get; set; }
+        public virtual DbSet<Customers> Customers { get; set; }
     }
 }

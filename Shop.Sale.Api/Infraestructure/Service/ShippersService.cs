@@ -11,13 +11,13 @@ using Shop.Sale.Api.Infraestructure.Service.Models.Shipper;
 
 namespace Shop.Sale.Api.Infraestructure.Service
 {
-    public class ShipperService : IShipperService
+    public class ShippersService : IShippersService
     {
-        private readonly IShipperRepository _ShipperRepository;
-        private readonly ILogger<Shipper> _ILogger;
+        private readonly IShippersRepository _ShipperRepository;
+        private readonly ILogger<Shippers> _ILogger;
         private readonly IConfiguration _IConfiguration;
-        public ShipperService(IShipperRepository iShipperRepository,
-                              ILogger<Shipper> iLogger,
+        public ShippersService(IShippersRepository iShipperRepository,
+                              ILogger<Shippers> iLogger,
                               IConfiguration iConfiguration)
         {
             this._ShipperRepository = iShipperRepository;
@@ -25,14 +25,14 @@ namespace Shop.Sale.Api.Infraestructure.Service
             this._IConfiguration = iConfiguration;
         }
 
-        public ShipperServiceResponse GetShippers()
+        public ShippersServiceResponse GetShippers()
         {
-            ShipperServiceResponse shipperServiceResult = new ShipperServiceResponse();
+            ShippersServiceResponse shipperServiceResult = new ShippersServiceResponse();
 
             try
             {
                 var query = (from shipper in _ShipperRepository.FindAll()
-                             select new ShipperGetModel(){
+                             select new ShippersGetModel(){
                              ShipperId = shipper.ShipperId,
                              CompanyName = shipper.CompanyName,
                              Phone = shipper.Phone

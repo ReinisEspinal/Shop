@@ -9,9 +9,11 @@ namespace Shop.Sale.Api.Dependency
     {
         public static void InitializeApplicationDependencies(IServiceCollection services)
         {
-            services.AddScoped<IShipperRepository, ShipperRepository>();
-            services.AddTransient<IShipperService, ShipperService>();
+            services.AddScoped<IShippersRepository, ShippersRepository>();
+            services.AddTransient<IShippersService, ShippersService>();
 
+            services.AddScoped<ICustomersRepository, CustomersRepository>();
+            services.AddTransient<ICustomersService, CustomersService>();
         }
     }
 }

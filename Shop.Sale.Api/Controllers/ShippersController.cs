@@ -8,16 +8,16 @@ namespace Shop.Sale.Api.Controllers
     [ApiController]
     public class ShippersController : Controller
     {
-        private readonly IShipperService _IShipperService;
-        public ShippersController(IShipperService iShipperService)
+        private readonly IShippersService _IShippersService;
+        public ShippersController(IShippersService iShippersService)
         {
-            this._IShipperService = iShipperService;
+            this._IShippersService = iShippersService;
         }
         //Get all Shippers
         [HttpGet]
         public ActionResult<ServiceReponse> Get()
         {
-            return _IShipperService.GetShippers();
+            return _IShippersService.GetShippers();
         }
     }
 }

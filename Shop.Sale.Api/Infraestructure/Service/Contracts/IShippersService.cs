@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Shop.Sale.Api.Infraestructure.Service.Contracts
 {
-    public interface IShipperService
+    public interface IShippersService
     {
-        ShipperServiceResponse GetShippers();
+        ShippersServiceResponse GetShippers();
     }
 }
 

@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Shop.Sale.Api.Infraestructure.Repository
 {
-    public class ShipperRepository : BaseRepository<Shipper>, IShipperRepository
+    public class ShippersRepository : BaseRepository<Shippers>, IShippersRepository
     {   
-        public ShipperRepository (SaleContext db) : base(db)
+        public ShippersRepository (SaleContext db) : base(db)
         {
         }
 
-        public override IEnumerable<Shipper> FindAll()
+        public override IEnumerable<Shippers> FindAll()
         {
             return base.FindAll().Where(Shippers => !Shippers.Deleted);
         }

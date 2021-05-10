@@ -1,8 +1,8 @@
 ﻿using Shop.Shared.Core;
-
 namespace Shop.Sale.Api.Infraestructure.Service.Core
 {
-    public class ShipperServiceResponse :ServiceReponse
+    public class CustomersServiceResponse : ServiceReponse
     {
+
     }
 }

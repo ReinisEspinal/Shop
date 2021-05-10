@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Shop.Sale.Api.Infraestructure.Repository.Contracts
 {
-    public interface IShipperRepository : IBaseRepository<Shipper>
+    public interface IShippersRepository : IBaseRepository<Shippers>
     {
     }
 }
