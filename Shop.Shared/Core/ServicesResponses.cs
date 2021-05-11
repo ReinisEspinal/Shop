@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Shop.Shared.Core
 {
-    public class ServiceReponse
+    public class ServicesResponses
     {
         public bool Success { get; set; }
         public string Message { get; set; }
         public dynamic Data { get; set; }
-        public ServiceReponse()
+        public ServicesResponses()
         {
             this.Success = true;
         }

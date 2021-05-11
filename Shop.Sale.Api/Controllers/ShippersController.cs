@@ -15,7 +15,7 @@ namespace Shop.Sale.Api.Controllers
         }
         //Get all Shippers
         [HttpGet]
-        public ActionResult<ServiceReponse> Get()
+        public ActionResult<ServicesResponses> Get()
         {
             return _IShippersService.GetShippers();
         }

@@ -28,26 +28,26 @@ namespace Shop.Production.Api.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<ServiceReponse>> GetById(int id)
+        public async Task<ActionResult<ServicesResponses>> GetById(int id)
         {
             return await _ISupplierService.GetSupplierById(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceReponse>> Create(SupplierServiceResultAddModel supplierAddModel)
+        public async Task<ActionResult<ServicesResponses>> Create(SupplierServiceResultAddModel supplierAddModel)
         {
             return await _ISupplierService.SaveSupplier(supplierAddModel);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
-        public async Task<ActionResult<ServiceReponse>> Delete(int id)
+        public async Task<ActionResult<ServicesResponses>> Delete(int id)
         {
             return await _ISupplierService.DeleteSupplier(id);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceReponse>> Edit(SupplierServiceResultModifyModel supplierModifyModel)
+        public async Task<ActionResult<ServicesResponses>> Edit(SupplierServiceResultModifyModel supplierModifyModel)
         {
            
             return Ok(await _ISupplierService.UpdateSupplier(supplierModifyModel));

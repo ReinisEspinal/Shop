@@ -14,7 +14,5 @@ namespace Shop.Production.Api.Infrastructure.Data.Entities
         public int CategoryId { get; set; }
         public decimal UnitPrice { get; set; }
         public bool Discontinued { get; set; }
-        public virtual Category Categories { get; set; }
-        public virtual Supplier Suppliers { get; set; }
     }
 }

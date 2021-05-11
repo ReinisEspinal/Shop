@@ -19,6 +19,9 @@ namespace Shop.Sale.Api.Dependency
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddTransient<IProductService, ProductService>();
+
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddTransient<IOrderDetailsService, OrderDetailsService>();
         }
     }
 }

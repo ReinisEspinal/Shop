@@ -2,7 +2,7 @@
 
 namespace Shop.Sale.Api.Infraestructure.Service.Core
 {
-    public class ProductsServiceResponse : ServiceReponse
+    public class ProductsServiceResponse : ServicesResponses
     {
     }
 }

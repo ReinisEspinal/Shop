@@ -16,7 +16,7 @@ namespace Shop.Sale.Api.Controllers
 
         //Get all the customers
         [HttpGet]
-        public ActionResult<ServiceReponse> Get()
+        public ActionResult<ServicesResponses> Get()
         {
             return _ICustomersService.GetCustomers();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Sale.Api.Infraestructure.Service.Core
 {
-    public class OrderDetailsServiceResponse : ServiceReponse
+    public class OrderDetailsServiceResponse : ServicesResponses
     {
     }
 }

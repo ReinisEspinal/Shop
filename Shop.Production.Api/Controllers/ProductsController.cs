@@ -20,7 +20,7 @@ namespace Shop.Production.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ServiceReponse> Get()
+        public ActionResult<ServicesResponses> Get()
         {
             try
             {
@@ -35,19 +35,19 @@ namespace Shop.Production.Api.Controllers
         [HttpGet]
         [Route("{id:int}")]
         //Form <- Para decir la manera de mandar la informacion
-        public async Task<ActionResult<ServiceReponse>> GetById(int id)
+        public async Task<ActionResult<ServicesResponses>> GetById(int id)
         {
             return await _IProductService.GetProductById(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceReponse>> Create(ProductServiceResultAddModel productServiceResult)
+        public async Task<ActionResult<ServicesResponses>> Create(ProductServiceResultAddModel productServiceResult)
         {
             return await _IProductService.SaveProduct(productServiceResult);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceReponse>> Edit(ProductServiceResultModifyModel objectProductModify)
+        public async Task<ActionResult<ServicesResponses>> Edit(ProductServiceResultModifyModel objectProductModify)
         {
 
             return await _IProductService.UpdateProduct(objectProductModify);
@@ -56,7 +56,7 @@ namespace Shop.Production.Api.Controllers
 
         [HttpDelete]
         [Route("Delete/{id:int}")]
-        public async Task<ActionResult<ServiceReponse>> Delete(int id)
+        public async Task<ActionResult<ServicesResponses>> Delete(int id)
         {
             return await _IProductService.RemoveProduct(id);
         }
