@@ -21,5 +21,6 @@ namespace Shop.Sale.Api.Infraestructure.Context
         public virtual DbSet<Shippers> Shippers { get; set; }
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }
