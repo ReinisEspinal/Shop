@@ -41,7 +41,8 @@ namespace Shop.Sale.Api.Infraestructure.Service
                                  OrderId = OrderDetails.OrderId,
                                  ProductName = Product.ProductName,
                                  UnitPrice = OrderDetails.UnitPrice,
-                                 Discount = OrderDetails.Discount
+                                 Discount = OrderDetails.Discount,
+                                 QTY = OrderDetails.QTY
                              }
                     );
 
