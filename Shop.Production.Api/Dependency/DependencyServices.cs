@@ -9,14 +9,14 @@ namespace Shop.Production.Api.Dependency
     {
         public static void InitializeApplicationDependencies(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddScoped<IProductsRepository, ProductsRepository>();
+            services.AddTransient<IProductsServices, ProductsServices>();
 
-            services.AddScoped<ISupplierRepository, SupplierRepository>();
-            services.AddTransient<ISupplierService, SupplierService>();
+            services.AddScoped<ISuppliersRepository, SuppliersRepository>();
+            services.AddTransient<ISuppliersServices, SuppliersServices>();
 
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddTransient<ICategoriesServices, CategoriesServices>();
         }
     }
 }

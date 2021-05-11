@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Production.Api.Infrastructure.Services.Contracts;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Category;
+using Shop.Production.Api.Infrastructure.Services.Core;
+using Shop.Production.Api.Infrastructure.Services.Models.Category;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,38 +14,38 @@ namespace Shop.Production.Api.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ICategoryService _IcategoryService;
+        private readonly ICategoriesServices _IcategoryService;
 
-        public CategoriesController(ICategoryService iCategoryService)
+        public CategoriesController(ICategoriesServices iCategoryService)
         {
             this._IcategoryService = iCategoryService;
         }
         [HttpGet]
-        public ActionResult<CategoryServiceResultCore> Get()
+        public ActionResult<CategoriesServicesResponse> Get()
         {
             return  _IcategoryService.GetCategories();
         }
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<ActionResult<CategoryServiceResultCore>> GetById(int id)
+        public async Task<ActionResult<CategoriesServicesResponse>> GetById(int id)
         {
             return await _IcategoryService.GetCategoryById(id);
         }
 
         [HttpPost]
-        public async Task<ActionResult<CategoryServiceResultCore>> SaveCategory(CategoryServiceResultAddModel categoriaAdd)
+        public async Task<ActionResult<CategoriesServicesResponse>> SaveCategory(CategoriesAddModel categoriaAdd)
         {
             return await _IcategoryService.SaveCategory(categoriaAdd);
         }
         [HttpPut]
-        public async Task<ActionResult<CategoryServiceResultCore>> EditCategory(CategoryServiceResultModifyModel categoryModifyModel)
+        public async Task<ActionResult<CategoriesServicesResponse>> EditCategory(CategoriesModifyModel categoryModifyModel)
         {
             return await _IcategoryService.UpdateCategory(categoryModifyModel);
         }
 
         [HttpDelete]
         [Route("Delete/{id:int}")]
-        public async Task<ActionResult<CategoryServiceResultCore>> DeleteCategory(int id)
+        public async Task<ActionResult<CategoriesServicesResponse>> DeleteCategory(int id)
         {
             return await _IcategoryService.DeleteCategory(id);
         }

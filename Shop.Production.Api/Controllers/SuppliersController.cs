@@ -1,27 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using Shop.Production.Api.Infrastructure.Services.Contracts;
 using Shop.Shared.Core;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Product;
+using Shop.Production.Api.Infrastructure.Services.Core;
 using System.Threading.Tasks;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Supplier;
+using Shop.Production.Api.Infrastructure.Services.Models.Supplier;
 
-namespace Shop.Production.Api.Controllers
+namespace Shop.Production.Api.Data.Entities
 {
     [Route("api/[controller]")]
     [ApiController]
     public class SuppliersController : ControllerBase
     {
-        public readonly ISupplierService _ISupplierService;
-        public SuppliersController(ISupplierService iSupplierService)
+        public readonly ISuppliersServices _ISupplierService;
+        public SuppliersController(ISuppliersServices iSupplierService)
         {
             this._ISupplierService = iSupplierService;
         }
 
         [HttpGet]
-        public ActionResult<SupplierServiceResultCore> Get()
+        public ActionResult<SuppliersServicesResponse> Get()
         {
             return _ISupplierService.GetSuppliers();
         }
@@ -34,7 +31,7 @@ namespace Shop.Production.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServicesResponses>> Create(SupplierServiceResultAddModel supplierAddModel)
+        public async Task<ActionResult<ServicesResponses>> Create(SuppliersAddModel supplierAddModel)
         {
             return await _ISupplierService.SaveSupplier(supplierAddModel);
         }
@@ -47,7 +44,7 @@ namespace Shop.Production.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServicesResponses>> Edit(SupplierServiceResultModifyModel supplierModifyModel)
+        public async Task<ActionResult<ServicesResponses>> Edit(SuppliersModifyModel supplierModifyModel)
         {
            
             return Ok(await _ISupplierService.UpdateSupplier(supplierModifyModel));

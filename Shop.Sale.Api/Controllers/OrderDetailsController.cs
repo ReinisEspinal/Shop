@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Shop.Sale.Api.Infraestructure.Service.Contracts;
+using Shop.Sale.Api.Infrastructure.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ namespace Shop.Sale.Api.Controllers
     [ApiController]
     public class OrderDetailsController : ControllerBase
     {
-        private readonly IOrderDetailsService _IOrderDetailsService;
-        public OrderDetailsController(IOrderDetailsService iOderDetailsService)
+        private readonly IOrderDetailsServices _IOrderDetailsService;
+        public OrderDetailsController(IOrderDetailsServices iOderDetailsService)
         {
             this._IOrderDetailsService = iOderDetailsService;
         }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Shop.Sale.Api.Infraestructure.Service.Contracts;
+using Shop.Sale.Api.Infrastructure.Services.Contracts;
 using Shop.Shared.Core;
 
 namespace Shop.Sale.Api.Controllers
@@ -8,8 +8,8 @@ namespace Shop.Sale.Api.Controllers
     [ApiController]
     public class ShippersController : Controller
     {
-        private readonly IShippersService _IShippersService;
-        public ShippersController(IShippersService iShippersService)
+        private readonly IShippersServices _IShippersService;
+        public ShippersController(IShippersServices iShippersService)
         {
             this._IShippersService = iShippersService;
         }
