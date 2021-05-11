@@ -26,45 +26,6 @@ namespace Shop.Production.Api.Infrastructure.Services
             this._logger = logger;
         }
 
-      public async Task<ProductsServiceResponse> GetProductById(int id)
-        {
-            ProductsServiceResponse productServiceResult = new ProductsServiceResponse();
-            ProductGetModel productGetModel = new ProductGetModel();
-            try
-            {
-                var oProduct = await _ProductRepository.GetById(id);
-
-
-                if (oProduct ==null || oProduct.Deleted == true)
-                {
-                    productServiceResult.Message = "El producto no existe";
-                    productServiceResult.Data = null;
-                    productServiceResult.Success = true;
-                    return productServiceResult;
-                }
-                else
-                {
-                    var query = (from product in _ProductRepository.FindAll().Where(c => c.ProductId == oProduct.ProductId)
-                                 select new ProductGetModel
-                                 {
-                                     ProductId = product.ProductId,
-                                     ProductName = product.ProductName,
-                                     UnitPrice = product.UnitPrice,
-                                     Discontinued = product.Discontinued,
-                                 });
-                    productServiceResult.Data = query;
-                    productServiceResult.Message = "Producto encontrado";
-                    productServiceResult.Success = true;
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"{e.Message}");
-                productServiceResult.Message = "Error filtrando el producto";
-                productServiceResult.Success = false;
-            }
-            return productServiceResult;
-        }
 
     }
 }

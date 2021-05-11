@@ -10,14 +10,14 @@ using Shop.Shared.Core;
 
 namespace Shop.Sale.Api.Infraestructure.Repository
 {
-    public class ProductRepository : BaseRepository<Product>, IProductRepository
+    public class ProductRepository : BaseRepository<Products>, IProductRepository
     {
         public ProductRepository(SaleContext db) : base(db)
         {
 
         }
 
-        public override IEnumerable<Product> FindAll()
+        public override IEnumerable<Products> FindAll()
         {
   
             return base.FindAll().Where(product => !product.Deleted);

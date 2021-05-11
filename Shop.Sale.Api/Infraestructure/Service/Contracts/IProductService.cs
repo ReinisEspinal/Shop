@@ -6,6 +6,6 @@ namespace Shop.Sale.Api.Infraestructure.Service.Contracts
 {
     public interface IProductService
     {
-        Task<ProductsServiceResponse> GetProductById(int id);
+ 
     }
 }

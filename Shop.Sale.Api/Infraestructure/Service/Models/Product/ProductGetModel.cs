@@ -12,15 +12,6 @@ namespace Shop.Sale.Api.Infraestructure.Service.Models.Product
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }
-        [DataType(DataType.Currency)]
-        public decimal UnitPrice { get; set; }
 
-        public bool Discontinued { get; set; }
-
-        //Propiedades de otras entidades
-
-        public string CompanyName { get; set; }
-
-        public string CategoryName { get; set; }
     }
 }

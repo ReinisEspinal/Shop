@@ -27,25 +27,33 @@ namespace Shop.Sale.Api.Infraestructure.Service
 
         public OrderDetailsServiceResponse GetOrderDetails()
         {
-            OrderDetailsServiceResponse orderDetaislServiceResponse = new OrderDetailsServiceResponse();
+            OrderDetailsServiceResponse resultServiceResponse = new OrderDetailsServiceResponse();
             try
             {
-                var query = ( from OrderDetails in _OrderDetailsRepository.FindAll() join
-                              Product in _IProductRepository.FindAll() on OrderDetails.ProductId equals Product.ProductId
-                         //     join Product in 
-                              select new OrderDetailsGetModel
-                              {
-                                  OrderId =  OrderDetails.OrderId,
-                                 ProductName = Product.ProductName
-                              }
+                var query = (from OrderDetails in _OrderDetailsRepository.FindAll()
+                             join Product in _IProductRepository.FindAll()
+                             on OrderDetails.ProductId equals Product.ProductId
+
+                             select new OrderDetailsGetModel
+                             {
+                                 OrderId = OrderDetails.OrderId,
+                                 ProductName = Product.ProductName,
+                                 UnitPrice = OrderDetails.UnitPrice,
+                                 Discount = OrderDetails.Discount
+                             }
                     );
+
+                resultServiceResponse.Data = query;
+                resultServiceResponse.Success = true;
             }
             catch (Exception e)
             {
 
                 _ILogger.LogError($"{e.Message}");
+                resultServiceResponse.Success = false;
+                resultServiceResponse.Message = "Error obteniendo los detalles de las ordenes";
             }
-            return orderDetaislServiceResponse;
+            return resultServiceResponse;
         }
     }
 }
