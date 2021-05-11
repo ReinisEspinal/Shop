@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Shop.Production.Api.Infrastructure.Data.Entities;
+using Shop.Production.Api.Data.Entities;
 
 namespace Shop.Production.Api.Infrastructure.Context
 {
@@ -22,8 +22,8 @@ namespace Shop.Production.Api.Infrastructure.Context
 
         }
 
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Suppliers> Suppliers { get; set; }
+        public virtual DbSet<Categories> Categories { get; set; }
     }
 }

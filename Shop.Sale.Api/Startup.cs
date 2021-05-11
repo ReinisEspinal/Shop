@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shop.Sale.Api.Data.Entity;
+using Shop.Sale.Api.Data.Entities;
 using Shop.Sale.Api.Dependency;
-using Shop.Sale.Api.Infraestructure.Context;
-using Shop.Sale.Api.Infraestructure.Repository;
-using Shop.Sale.Api.Infraestructure.Repository.Contracts;
+using Shop.Sale.Api.Infrastructure.Context;
+using Shop.Sale.Api.Infrastructure.Repository;
+using Shop.Sale.Api.Infrastructure.Repository.Contracts;
 
 namespace Shop.Sale.Api
 {

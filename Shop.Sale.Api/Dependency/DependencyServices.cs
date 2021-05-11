@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shop.Sale.Api.Infraestructure.Repository.Contracts;
-using Shop.Sale.Api.Infraestructure.Service.Contracts;
-using Shop.Sale.Api.Infraestructure.Repository;
-using Shop.Sale.Api.Infraestructure.Service;
+using Shop.Sale.Api.Infrastructure.Repository.Contracts;
+using Shop.Sale.Api.Infrastructure.Services.Contracts;
+using Shop.Sale.Api.Infrastructure.Repository;
 using Shop.Production.Api.Infrastructure.Services;
+using Shop.Sale.Api.Infrastructure.Service;
 
 namespace Shop.Sale.Api.Dependency
 {
@@ -12,16 +12,16 @@ namespace Shop.Sale.Api.Dependency
         public static void InitializeApplicationDependencies(IServiceCollection services)
         {
             services.AddScoped<IShippersRepository, ShippersRepository>();
-            services.AddTransient<IShippersService, ShippersService>();
+            services.AddTransient<IShippersServices, ShippersServices>();
 
             services.AddScoped<ICustomersRepository, CustomersRepository>();
-            services.AddTransient<ICustomersService, CustomersService>();
+            services.AddTransient<ICustomersServices, CustomersServices>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IProductServices, ProductServices>();
 
             services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
-            services.AddTransient<IOrderDetailsService, OrderDetailsService>();
+            services.AddTransient<IOrderDetailsServices, OrderDetailsServices>();
         }
     }
 }

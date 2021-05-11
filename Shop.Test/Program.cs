@@ -1,12 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Shop.Production.Api.Infrastructure.Context;
-using Shop.Production.Api.Infrastructure.Data.Entities;
-using Shop.Production.Api.Infrastructure.Repository;
-using Shop.Production.Api.Infrastructure.Repository.Contracts;
-
-namespace Shop.Test
+﻿namespace Shop.Test
 {
     class Program
     {

@@ -2,19 +2,19 @@
 using System;
 using Shop.Production.Api.Infrastructure.Services.Contracts;
 using Shop.Shared.Core;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Core;
-using Shop.Production.Api.Infrastructure.Services.ServicesResult.Models.Product;
+using Shop.Production.Api.Infrastructure.Services.Models;
+using Shop.Production.Api.Infrastructure.Services.Core;
+using Shop.Production.Api.Infrastructure.Services.Models.Product;
 using System.Threading.Tasks;
 
-namespace Shop.Production.Api.Controllers
+namespace Shop.Production.Api.Data.Entities
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _IProductService;
-        public ProductsController(IProductService iProductService)
+        private readonly IProductsServices _IProductService;
+        public ProductsController(IProductsServices iProductService)
         {
             this._IProductService = iProductService;
         }
@@ -41,13 +41,13 @@ namespace Shop.Production.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServicesResponses>> Create(ProductServiceResultAddModel productServiceResult)
+        public async Task<ActionResult<ServicesResponses>> Create(ProductsAddModel productServiceResult)
         {
             return await _IProductService.SaveProduct(productServiceResult);
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServicesResponses>> Edit(ProductServiceResultModifyModel objectProductModify)
+        public async Task<ActionResult<ServicesResponses>> Edit(ProductsModifyModel objectProductModify)
         {
 
             return await _IProductService.UpdateProduct(objectProductModify);
