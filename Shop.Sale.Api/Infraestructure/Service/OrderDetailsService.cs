@@ -17,10 +17,12 @@ namespace Shop.Sale.Api.Infraestructure.Service
         private readonly IConfiguration _Configuration;
 
         public OrderDetailsService(IOrderDetailsRepository iOrderDetailsRepository,
+            IProductRepository iProductReposiory,
                                     ILogger<OrderDetailsService> iLogger,
                                     IConfiguration iConfiguration)
         {
             this._OrderDetailsRepository = iOrderDetailsRepository;
+            this._IProductRepository = iProductReposiory;
             this._ILogger = iLogger;
             this._Configuration = iConfiguration;
         }
