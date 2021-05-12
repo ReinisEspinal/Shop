@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Shop.Sale.Api.Infrastructure.Repository.Contracts;
 using Shop.Sale.Api.Infrastructure.Services.Contracts;
 using Shop.Sale.Api.Infrastructure.Services.Core;
+using Shop.Sale.Api.Infrastructure.Services.Models.OrderDetails;
 using Shop.Sale.Api.Infrastructure.Services.Models.Orders;
 using System;
 using System.Linq;
@@ -25,6 +26,16 @@ namespace Shop.Sale.Api.Infrastructure.Service
             this._IProductRepository = iProductReposiory;
             this._ILogger = iLogger;
             this._Configuration = iConfiguration;
+        }
+
+        public OrderDetailsServicesResponse DeleteOrderDelete(OrderDetailsDeleteModel orderDetailsDeleteModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OrderDetailsServicesResponse EditOrderDetails(OrderDetailsEditModel orderDetailsEditModel)
+        {
+            throw new NotImplementedException();
         }
 
         public OrderDetailsServicesResponse GetOrderDetails()
@@ -56,6 +67,16 @@ namespace Shop.Sale.Api.Infrastructure.Service
                 resultServiceResponse.Message = "Error obteniendo los detalles de las ordenes";
             }
             return resultServiceResponse;
+        }
+
+        public OrderDetailsServicesResponse GetOrderDetailsById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OrderDetailsServicesResponse SaveOrderDetails(OrderDetailsAddModel orderDetailsAddModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }
