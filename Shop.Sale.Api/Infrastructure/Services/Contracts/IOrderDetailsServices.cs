@@ -10,6 +10,6 @@ namespace Shop.Sale.Api.Infrastructure.Services.Contracts
         OrderDetailsServicesResponse GetOrderDetailsById(int id);
         OrderDetailsServicesResponse SaveOrderDetails(OrderDetailsAddModel orderDetailsAddModel);
         OrderDetailsServicesResponse EditOrderDetails(OrderDetailsEditModel orderDetailsEditModel);
-        Task <OrderDetailsServicesResponse> DeleteAllOrderDetails(OrderDetailsDeleteModel orderDetailsDeleteModel);
+        Task <OrderDetailsServicesResponse> DeleteOrderDetail(OrderDetailsDeleteModel orderDetailsDeleteModel);
     }
 }

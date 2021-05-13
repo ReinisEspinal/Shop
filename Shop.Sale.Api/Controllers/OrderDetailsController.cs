@@ -30,7 +30,7 @@ namespace Shop.Sale.Api.Controllers
         [HttpDelete]
         public async Task<ActionResult<ServicesResponses>> Delete(OrderDetailsDeleteModel orderDetailsDelete)
         {
-            return await _IOrderDetailsService.DeleteAllOrderDetails(orderDetailsDelete);
+            return await _IOrderDetailsService.DeleteOrderDetail(orderDetailsDelete);
         }
     }
 }
