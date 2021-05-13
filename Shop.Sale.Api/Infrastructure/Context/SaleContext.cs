@@ -21,5 +21,13 @@ namespace Shop.Sale.Api.Infrastructure.Context
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Products> Products { get; set; }
         public virtual DbSet<OrderDetails> OrderDetails { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<OrderDetails>().HasKey(OrderDetails => new { OrderDetails.OrderId, OrderDetails.ProductId });
+        }
+
+
+        //     modelBuilder.Entity<Business_attrib2object>().HasKey(ba => new { ba.IdClass, ba.IdAttribute });      
+
     }
 }

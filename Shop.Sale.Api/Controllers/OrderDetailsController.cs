@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shop.Shared.Core;
+using Shop.Sale.Api.Infrastructure.Services.Models.OrderDetails;
 
 namespace Shop.Sale.Api.Controllers
 {
@@ -24,6 +25,12 @@ namespace Shop.Sale.Api.Controllers
         public ActionResult<ServicesResponses> Get()
         {
             return _IOrderDetailsService.GetOrderDetails();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult<ServicesResponses>> Delete(OrderDetailsDeleteModel orderDetailsDelete)
+        {
+            return await _IOrderDetailsService.DeleteAllOrderDetails(orderDetailsDelete);
         }
     }
 }
