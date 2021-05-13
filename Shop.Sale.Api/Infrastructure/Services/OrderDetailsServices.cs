@@ -7,6 +7,7 @@ using Shop.Sale.Api.Infrastructure.Services.Models.OrderDetails;
 using Shop.Sale.Api.Infrastructure.Services.Models.Orders;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shop.Sale.Api.Infrastructure.Service
 {
@@ -28,9 +29,38 @@ namespace Shop.Sale.Api.Infrastructure.Service
             this._Configuration = iConfiguration;
         }
 
-        public OrderDetailsServicesResponse DeleteOrderDelete(OrderDetailsDeleteModel orderDetailsDeleteModel)
+        public async Task<OrderDetailsServicesResponse> DeleteOrderDetails(OrderDetailsDeleteModel orderDetailsDeleteModel)
         {
-            throw new NotImplementedException();
+            OrderDetailsServicesResponse orderDetailsSeviceResponse = new OrderDetailsServicesResponse();
+            try
+            {
+                var orderDetails = _OrderDetailsRepository.FindAll().Where(c => c.OrderId == orderDetailsDeleteModel.OrderId);
+
+                foreach (var item in orderDetails)
+                {
+                    if (item.ProductId == orderDetailsDeleteModel.ProductId)
+                    {
+                        item.UserDeleted = orderDetailsDeleteModel.UserDeleted;
+                        item.Deleted = orderDetailsDeleteModel.Deleted;
+                        item.DeletedDate = orderDetailsDeleteModel.DeletedDate;
+
+                        break;
+                    }
+                }
+
+                await _OrderDetailsRepository.Commit();
+                orderDetailsSeviceResponse.Message = "Eliminado";
+                orderDetailsSeviceResponse.Success = true;
+                orderDetailsSeviceResponse.Data = orderDetailsDeleteModel;
+            }
+            catch (Exception e)
+            {
+                _ILogger.LogError($"{e.Message}");
+                orderDetailsSeviceResponse.Success = false;
+                orderDetailsSeviceResponse.Message = "Error eliminando el detalle de orden";
+
+            }
+            return orderDetailsSeviceResponse;
         }
 
         public OrderDetailsServicesResponse EditOrderDetails(OrderDetailsEditModel orderDetailsEditModel)
@@ -55,7 +85,7 @@ namespace Shop.Sale.Api.Infrastructure.Service
                                  Discount = OrderDetails.Discount,
                                  QTY = OrderDetails.QTY
                              }
-                    );;
+                    ); ;
 
                 resultServiceResponse.Data = query;
                 resultServiceResponse.Success = true;
