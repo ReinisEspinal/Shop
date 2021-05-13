@@ -29,7 +29,7 @@ namespace Shop.Sale.Api.Infrastructure.Service
             this._Configuration = iConfiguration;
         }
 
-        public async Task<OrderDetailsServicesResponse> DeleteOrderDetails(OrderDetailsDeleteModel orderDetailsDeleteModel)
+        public async Task<OrderDetailsServicesResponse> DeleteOrderDetail(OrderDetailsDeleteModel orderDetailsDeleteModel)
         {
             OrderDetailsServicesResponse orderDetailsSeviceResponse = new OrderDetailsServicesResponse();
             try
