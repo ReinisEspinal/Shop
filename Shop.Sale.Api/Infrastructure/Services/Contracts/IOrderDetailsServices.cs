@@ -7,9 +7,10 @@ namespace Shop.Sale.Api.Infrastructure.Services.Contracts
     public interface IOrderDetailsServices
     {
         OrderDetailsServicesResponse GetOrderDetails();
-        OrderDetailsServicesResponse GetOrderDetailsById(int id);
-        OrderDetailsServicesResponse SaveOrderDetails(OrderDetailsAddModel orderDetailsAddModel);
-        OrderDetailsServicesResponse EditOrderDetails(OrderDetailsEditModel orderDetailsEditModel);
+        OrderDetailsServicesResponse GetOrderDetailsById(int orderId, int productId);
+        OrderDetailsServicesResponse GetOrderDetailsById(int orderId);
+        Task<OrderDetailsServicesResponse> SaveOrderDetails(OrderDetailsAddModel orderDetailsAddModel);
+        Task<OrderDetailsServicesResponse> EditOrderDetails(OrderDetailsEditModel orderDetailsEditModel);
         Task <OrderDetailsServicesResponse> DeleteOrderDetail(OrderDetailsDeleteModel orderDetailsDeleteModel);
     }
 }
