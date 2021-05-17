@@ -27,10 +27,34 @@ namespace Shop.Sale.Api.Controllers
             return _IOrderDetailsService.GetOrderDetails();
         }
 
+        [Route("Orders/{id:int}")]
+        [HttpGet]
+        public ActionResult<ServicesResponses> GetById(int id)
+        {
+            return _IOrderDetailsService.GetOrderDetailsById(id);
+        }
+        [Route("Orders/{id:int}/Products/{productid:int}")]
+        [HttpGet]
+        public ActionResult<ServicesResponses> GetById(int id,int productid)
+        {
+            return _IOrderDetailsService.GetOrderDetailsById(id,productid);
+        }
         [HttpDelete]
         public async Task<ActionResult<ServicesResponses>> Delete(OrderDetailsDeleteModel orderDetailsDelete)
         {
             return await _IOrderDetailsService.DeleteOrderDetail(orderDetailsDelete);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServicesResponses>> Update(OrderDetailsEditModel orderDetailsEdit)
+        {
+            return await _IOrderDetailsService.EditOrderDetails(orderDetailsEdit);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ServicesResponses>> Create(OrderDetailsAddModel newOrdeerDetails)
+        {
+            return await _IOrderDetailsService.SaveOrderDetails(newOrdeerDetails);
         }
     }
 }

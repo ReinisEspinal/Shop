@@ -14,5 +14,7 @@ namespace Shop.Sale.Api.Infrastructure.Services.Models.Orders
 
         //Propiedades de otras entidades
         public string ProductName { get; set; }
+        public string EmployeeName { get; set; }
+        public DateTime OrderDate { get; set; }
     }
 }
