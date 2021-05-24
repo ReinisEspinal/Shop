@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Sale.Api.Infrastructure.Services.Contracts;
 using Shop.Sale.Api.Infrastructure.Services.Models.Orders;
@@ -21,6 +22,7 @@ namespace Shop.Sale.Api.Controllers
         }
 
         [HttpGet]
+        [EnableCors("AllowOrigin")]
         public ActionResult<ServicesResponses> Get()
         {
             return _IOrderServices.GetOrders();

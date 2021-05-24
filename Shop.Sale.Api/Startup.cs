@@ -14,6 +14,7 @@ namespace Shop.Sale.Api
 {
     public class Startup
     {
+  
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,17 +25,11 @@ namespace Shop.Sale.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", builder =>
-                  {
-                      builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader();
-                  });
-            });
 
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
             services.AddDbContext<SaleContext>(options => options.UseSqlServer(this.Configuration.GetConnectionString("SaleContext")));
 
             DependencyServices.InitializeApplicationDependencies(services);
